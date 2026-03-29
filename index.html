@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act Operator Educational Course</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; background-color: #0f172a; color: #f8fafc; overflow-x: hidden; }
+        .markdown-body h1 { font-size: 3rem; font-weight: 800; margin-bottom: 2rem; background: linear-gradient(to right, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .markdown-body h2 { font-size: 2rem; font-weight: 700; margin-top: 4rem; margin-bottom: 1.5rem; color: #e2e8f0; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
+        .markdown-body h3 { font-size: 1.5rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; color: #cbd5e1; }
+        .markdown-body p { margin-bottom: 1.5rem; line-height: 1.8; color: #94a3b8; font-size: 1.125rem; }
+        .markdown-body pre { background: #1e293b; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; margin-bottom: 1.5rem; border: 1px solid #334155; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .markdown-body code { font-family: 'JetBrains Mono', monospace; color: #a78bfa; font-size: 0.9em; padding: 0.2em 0.4em; background: rgba(167, 139, 250, 0.1); border-radius: 4px; }
+        .markdown-body pre code { color: #e2e8f0; background: none; padding: 0; }
+        .markdown-body blockquote { border-left: 4px solid #60a5fa; padding-left: 1.5rem; margin: 1.5rem 0; color: #cbd5e1; font-style: italic; background: rgba(96, 165, 250, 0.05); padding: 1rem 1.5rem; border-radius: 0 0.5rem 0.5rem 0; }
+        .markdown-body ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; color: #94a3b8; }
+        .markdown-body li { margin-bottom: 0.5rem; font-size: 1.125rem; }
+        .markdown-body table { width: 100%; margin-bottom: 2rem; border-collapse: collapse; }
+        .markdown-body th, .markdown-body td { border: 1px solid #334155; padding: 1rem; text-align: left; }
+        .markdown-body th { background: #1e293b; color: #e2e8f0; font-weight: 600; }
+        .markdown-body hr { border-color: #334155; margin: 3rem 0; }
+        
+        /* Motion UI Elements */
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding: 3rem; margin-bottom: 4rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); min-height: 60vh; }
+        .nav-button { transition: all 0.3s ease; }
+        .nav-button:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(96, 165, 250, 0.3); }
+        .nav-button.hidden { display: none; }
+        
+        #progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(to right, #3b82f6, #8b5cf6); z-index: 50; transition: width 0.3s ease-out; }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white relative">
+    <div id="progress-bar" style="width: 0%"></div>
+    
+    <nav class="fixed w-full z-40 top-0 start-0 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md">
+      <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between p-4">
+        <span class="self-center text-2xl font-bold whitespace-nowrap text-white tracking-tight">Act Operator <span class="text-blue-400">Masterclass</span></span>
+        <div class="flex space-x-3">
+            <button id="prev-btn" class="nav-button px-4 py-2 text-sm font-medium text-slate-300 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700 hover:text-white hidden">← 이전</button>
+            <button id="next-btn" class="nav-button px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 hidden">다음 장으로 →</button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto pt-32 pb-24 px-6 relative">
+        <div id="content-wrapper" class="glass-panel transition-all duration-500 transform">
+            <div id="content" class="markdown-body">
+                <div class="flex justify-center items-center h-64">
+                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Directly embedding the original markdown contents so it NEVER 404s
+        const posts = [
+            `---
+title: "0차시 - AI 마인드셋: 망치론과 퍼스널 브랜딩"
+---
+
+# 0차시 - AI 마인드셋: 망치론과 퍼스널 브랜딩
+
+## 🎯 Topic (주제)
+**"AI는 돈을 복사하는 마법 지팡이가 아니라, 내 시간과 비용을 획기적으로 줄여주는 가장 완벽한 '망치'다."**
+수익화 자체에 매몰되지 않고, AI를 도구로 삼아 본업의 가치를 극대화하는 올바른 마인드셋과 퍼스널 브랜딩 전략.
+
+## 💡 Concept (개념 정의)
+
+### 1. 한국인이 AI로 돈 못 버는 이유
+대부분의 사람들은 "AI 자체를 팔아서" 일확천금을 노립니다. 하지만 이것은 흔한 착각입니다. AI는 도구일 뿐, 비즈니스의 본질을 대체할 수 없습니다.
+
+### 2. 핵심 비유: '망치론'
+최고급 망치를 샀다고 해서 내 통장에 돈이 꽂히지는 않습니다. 망치를 들고 **'돈을 벌 수 있는 현장'**으로 가야 합니다. 
+AI도 마찬가지입니다. AI라는 강력한 망치를 들고 이커머스, 콘텐츠 기획, 마케팅 자동화 등 **'진짜 가치가 창출되는 곳'**에 내리쳐야 비로소 수익이 발생합니다.
+
+### 3. 퍼스널 브랜딩의 방향성 (선한 영향력)
+나의 이야기는 "나는 AI로 100만 원을 벌었다"가 아닙니다. 
+**"나는 이커머스 셀러 출신인데, AI라는 망치를 써서 하루 10시간 걸리던 업무를 1시간으로 줄였고, 그 아낀 시간과 비용이 내 진짜 수익이 되었다."** 라는 진정성 있는 큐레이팅입니다.
+
+## 🚀 Example (실전 사례)
+
+### [콘텐츠 제작 프로세스의 자동화 (망치 휘두르기)]
+단순히 "대본 써줘"가 아니라, 도구를 정교하게 다루는 방법입니다.
+
+1. **리버스 엔지니어링 (벤치마킹):** 
+   - 터진 유튜브 영상의 URL을 \`yt-dlp\`로 다운로드.
+   - 3분 19초, 3분 58초 등 가장 반응이 좋았던 타임스탬프를 캡처.
+2. **Claude Code \`/skill-creator\` 활용:**
+   - 캡처한 프레임워크와 스크립트 패턴을 클로드에게 주입.
+   - *"이 거장(유명인)의 화법과 영상 전개 방식을 리버스 엔지니어링해서, 내 채널에 맞는 새로운 Skill(SOP)을 생성해 줘."*
+3. **휴먼 터치 (HITL):**
+   - 썸네일과 최종 대본 수정, 유튜브 태그 SEO(구글 클라우드 + 유튜브 Data API v3 연동)의 마지막 의사결정은 반드시 '사람(나)'이 직접 컨펌.
+
+## ✅ Checklist (검증 방법)
+- [ ] 내 콘텐츠가 "AI로 쉽게 돈 버는 법"이라는 뻔한 내용(예측되는 내용)을 피하고 있는가?
+- [ ] 시청자에게 '망치(AI)'를 쥐여주는 것을 넘어, '어디에 내리쳐야 할지(인사이트/동기부여)'를 정확히 큐레이팅하고 있는가?
+- [ ] AI 자동화(TTS 튜닝, 스킬 생성 등)의 끝에는 반드시 나의 '휴먼 터치(의사결정)'가 들어가 있는가?
+`,
+            `---
+title: "1차시 - Act Operator와 AI 에이전트 자동화"
+---
+
+# 1차시 - Act Operator와 AI 에이전트 자동화
+
+## 🎯 Topic
+
+> **핵심 키워드**: \`스캐폴딩(Scaffolding)\`, \`LangGraph 프로젝트 자동 생성\`
+
+AI 에이전트를 만들 때, 코드를 밑바닥부터 짜는 대신
+**명령어 4개**로 프로덕션 수준의 프로젝트 구조를 자동 생성하는 도구.
+
+---
+
+## 💡 Concept
+
+### 문제: AI 에이전트 개발의 현실
+
+\`\`\`
+"챗봇 하나 만들려고 했는데..."
+
+├── 폴더 구조는 어떻게 잡지?
+├── 상태 관리는? 메모리는?
+├── 도구(Tool) 연동은 어디에 넣지?
+├── 테스트는 어떻게 하지?
+└── 팀원이 코드를 이해할 수 있을까?
+\`\`\`
+
+> 매번 처음부터 설계하면 **구조가 제각각**이고, **유지보수가 어렵다.**
+
+### 해결: Act Operator
+
+Act Operator는 **건축의 설계도면**과 같다.
+
+\`\`\`
+건축가가 집을 지을 때           개발자가 AI 에이전트를 만들 때
+─────────────────────         ─────────────────────────────
+설계도면 → 골조 → 인테리어     act new → 코드 구현 → 배포
+         ↑                            ↑
+    표준화된 구조                Act Operator가 생성하는 구조
+\`\`\`
+
+### 명령어 4개로 끝나는 워크플로우
+
+| 순서 | 명령어 | 역할 |
+|:---:|---|---|
+| 1 | \`act new\` | 프로젝트 뼈대 생성 (폴더 + 모듈 + AI 스킬) |
+| 2 | \`uv sync\` | 의존성 설치 및 가상환경 동기화 |
+| 3 | \`act cast\` | 새 워크플로우(Cast) 추가 |
+| 4 | \`langgraph dev\` | 개발 서버 실행 + 시각적 디버깅 |
+
+### Act와 Cast — 핵심 구조
+
+\`\`\`
+🎬 Act = 영화 한 편 (전체 프로젝트, 모노레포)
+   🎭 Cast = 배우 (개별 워크플로우, 독립 패키지)
+
+예시:
+   Act: "고객 서비스 시스템"
+   ├── Cast 1: 챗봇
+   ├── Cast 2: 이메일 자동화 봇     ← 오늘 만들 것
+   └── Cast 3: 티켓 분류기
+\`\`\`
+
+---
+
+## 🚀 Example
+
+### \`act new\` 한 번으로 생성되는 프로젝트 구조
+
+\`\`\`bash
+uvx --from act-operator act new
+# → Act 이름: email-assistant
+# → Cast 이름: email-bot
+\`\`\`
+
+\`\`\`
+email-assistant/               ← Act (모노레포)
+├── casts/
+│   └── email_bot/             ← Cast (워크플로우)
+│       ├── graph.py           ← 🟠 그래프 조립 (진입점)
+│       └── modules/
+│           ├── state.py       ← 🔵 상태 스키마
+│           ├── nodes.py       ← 🔵 비즈니스 로직
+│           ├── tools.py       ← ⚫ 외부 도구 (이메일 전송 등)
+│           ├── middlewares.py  ← ⚫ 안전장치 (HITL, PII 등)
+│           └── ...
+├── langgraph.json             ← LangGraph 등록
+└── .env                       ← API 키 설정
+\`\`\`
+
+> **핵심 3파일**: \`state.py\` → \`nodes.py\` → \`graph.py\` 만 있으면 동작한다.
+
+---
+
+## ✅ Checklist
+
+- [ ] Act Operator가 "코드를 짜주는 도구"가 아니라 "구조를 생성하는 도구"임을 이해했는가?
+- [ ] Act(모노레포)와 Cast(개별 워크플로우)의 차이를 설명할 수 있는가?
+- [ ] 명령어 4개(\`act new\`, \`uv sync\`, \`act cast\`, \`langgraph dev\`)의 역할을 구분할 수 있는가?
+- [ ] 생성된 폴더 구조에서 \`state.py\`, \`nodes.py\`, \`graph.py\`의 역할을 알고 있는가?
+`,
+            `---
+title: "2차시 - HITL 이메일 자동화 봇 워크플로우"
+---
+
+# 2차시 - HITL 이메일 자동화 봇 워크플로우
+
+## 🎯 Topic
+
+> **핵심 키워드**: \`HITL(Human-in-the-loop)\`, \`LangGraph interrupt\`, \`상태 기계(State Machine)\`
+
+완전 자동화의 위험성을 막기 위해, 이메일을 발송하기 전 **"사람의 승인(결재)"**을 거치는 워크플로우 구현.
+
+---
+
+## 💡 Concept
+
+### 왜 HITL이 필요한가?
+
+- AI가 엉뚱한 사람에게 이메일을 보내거나, 잘못된 금액을 안내하면? (대형 사고)
+- 따라서 **초안 작성(Draft)은 AI**가 하되, **최종 전송(Send)은 사람**이 버튼을 눌러야 한다.
+
+### LangGraph에서의 HITL 구현 방식
+
+1. 노드 실행 중 \`interrupt()\` 함수를 만나면 일시 정지 상태가 됨.
+2. 외부(사람)에서 승인/수정 데이터를 입력하며 다시 실행(Resume).
+3. 다음 노드로 진행.
+
+\`\`\`
+[초안 작성 Node] ──→ (일시 정지) ──→ [검토 Node] ──→ [전송 Node]
+                        ↑
+                   사람의 승인 (HITL)
+\`\`\`
+
+---
+
+## 🚀 Example
+
+### 이메일 봇의 핵심 노드 3가지
+
+\`\`\`python
+# 1. DraftEmailNode: AI가 초안을 씀
+def draft_email_node(state: EmailState):
+    prompt = f"다음 내용을 바탕으로 이메일을 작성해: {state.request}"
+    response = llm.invoke(prompt)
+    return {"draft": response.content}
+
+# 2. ReviewEmailNode: 사람의 승인을 기다림
+def review_email_node(state: EmailState):
+    # LangGraph의 interrupt 기능 사용
+    decision = interrupt({
+        "question": "이 초안대로 메일을 발송할까요?",
+        "draft": state.draft
+    })
+    
+    if decision == "approve":
+        return {"status": "approved"}
+    else:
+        return {"status": "rejected", "feedback": decision}
+
+# 3. SendEmailNode: 실제 이메일 발송
+def send_email_node(state: EmailState):
+    if state.status == "approved":
+        send_via_smtp(state.draft)
+    return {"sent": True}
+\`\`\`
+
+### 흐름 제어 (Conditional Edges)
+
+- 승인됨(approved) → 전송 노드로 이동
+- 거절됨(rejected) → 피드백을 반영하여 다시 초안 작성 노드로 이동 (Loop)
+
+---
+
+## ✅ Checklist
+
+- [ ] 자동화 파이프라인에서 인간의 통제(HITL)가 왜 필수적인지 이해했는가?
+- [ ] LangGraph의 \`interrupt()\` 메커니즘을 설명할 수 있는가?
+- [ ] 거절되었을 때 다시 초안을 작성하는 루프(Loop) 구조를 이해했는가?
+`,
+            `---
+title: "3차시 - 시연 및 LangSmith 모니터링"
+---
+
+# 3차시 - 시연 및 LangSmith 모니터링
+
+## 🎯 Topic
+
+> **핵심 키워드**: \`LangSmith\`, \`시각적 디버깅\`, \`프로덕션 모니터링\`
+
+개발한 AI 워크플로우가 실제로 어떻게 동작하는지 눈으로 확인하고, LangSmith를 통해 내부 사고 과정을 추적(Trace)하는 방법.
+
+---
+
+## 💡 Concept
+
+### LangSmith란?
+
+- AI 워크플로우를 위한 **"X-ray(엑스레이) 뷰어"**.
+- LLM이 어떤 프롬프트를 받았고, 어떤 API를 호출했으며, 몇 토큰을 썼는지 초 단위로 기록.
+
+### 1. 로컬 디버깅 (LangGraph Studio)
+\`langgraph dev\` 명령어를 치면 열리는 로컬 스튜디오.
+노드의 연결 상태를 다이어그램으로 보고, 실시간으로 상태(State) 값을 수정하며 테스트.
+
+### 2. 프로덕션 모니터링 (LangSmith)
+실제 서버에 배포된 후, 유저들의 요청이 실패하거나 이상한 답변이 나갔을 때 **어디서 병목/오류가 발생했는지 역추적**.
+
+---
+
+## 🚀 Example
+
+### 1. LangSmith 연동 (.env 설정)
+
+프로젝트 최상단 \`.env\` 파일에 API 키 추가 (단 3줄).
+
+\`\`\`env
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
+LANGCHAIN_API_KEY="ls__..."
+LANGCHAIN_PROJECT="email-assistant"
+\`\`\`
+
+> 이 설정만 켜두면, 코드를 수정하지 않아도 모든 실행 과정이 LangSmith 대시보드에 자동으로 전송됨.
+
+### 2. 시연 스크립트 실행 (test_email_bot.py)
+
+\`\`\`python
+# 테스트 스크립트 실행
+python test_email_bot.py
+\`\`\`
+
+**[터미널 출력 예시]**
+\`\`\`
+1. 초안 작성 중...
+[AI 초안] 안녕하세요 고객님, 환불 요청 건으로 연락드립니다...
+
+2. 검토 대기 중 (HITL)...
+(y/n/feedback): feedback
+입력: "조금 더 부드러운 어조로 바꿔줘"
+
+3. 초안 재작성 중...
+[AI 초안] 고객님, 먼저 불편을 드려 정말 죄송합니다...
+
+4. 검토 대기 중 (HITL)...
+(y/n/feedback): y
+[승인 완료] 이메일 발송!
+\`\`\`
+
+---
+
+## ✅ Checklist
+
+- [ ] 로컬 스튜디오(LangGraph Studio)와 클라우드(LangSmith)의 용도를 구분할 수 있는가?
+- [ ] \`.env\` 파일에 LangSmith 연동 환경변수를 설정할 수 있는가?
+- [ ] 터미널 테스트 스크립트에서 피드백을 통해 AI의 초안이 변경되는 것을 확인했는가?
+`
+        ];
+
+        let currentIndex = 0;
+
+        async function loadContent(index) {
+            try {
+                let text = posts[index];
+                
+                // Strip YAML Frontmatter
+                text = text.replace(/---[\s\S]*?---/, '');
+                
+                // Parse Markdown
+                const html = marked.parse(text);
+                const contentDiv = document.getElementById('content');
+                const wrapper = document.getElementById('content-wrapper');
+                
+                // Animation Out
+                wrapper.style.opacity = '0';
+                wrapper.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    contentDiv.innerHTML = html;
+                    
+                    // Add AOS attributes dynamically to tags for internal scrolling motion
+                    const elementsToAnimate = contentDiv.querySelectorAll('h1, h2, h3, p, pre, blockquote, ul, table');
+                    elementsToAnimate.forEach((el, i) => {
+                        el.setAttribute('data-aos', 'fade-up');
+                        el.setAttribute('data-aos-offset', '0');
+                    });
+                    
+                    // Animation In
+                    wrapper.style.opacity = '1';
+                    wrapper.style.transform = 'translateY(0)';
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    // Re-init AOS
+                    setTimeout(() => {
+                        AOS.init({ duration: 800, once: true });
+                    }, 100);
+                    
+                    updateNav();
+                }, 300);
+                
+            } catch (error) {
+                document.getElementById('content').innerHTML = `
+                    <div class="text-center py-20">
+                        <h2 class="text-3xl text-red-400 mb-4">자료를 불러오지 못했습니다.</h2>
+                        <p class="text-slate-400">${error.message}</p>
+                    </div>`;
+            }
+        }
+
+        function updateNav() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (currentIndex > 0) {
+                prevBtn.classList.remove('hidden');
+            } else {
+                prevBtn.classList.add('hidden');
+            }
+            
+            if (currentIndex < posts.length - 1) {
+                nextBtn.classList.remove('hidden');
+                nextBtn.innerText = '다음 장으로 →';
+            } else {
+                nextBtn.classList.add('hidden');
+            }
+            
+            const progress = ((currentIndex + 1) / posts.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentIndex > 0) { currentIndex--; loadContent(currentIndex); }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (currentIndex < posts.length - 1) { currentIndex++; loadContent(currentIndex); }
+        });
+
+        // First Load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadContent(currentIndex);
+        });
+    </script>
+</body>
+</html>
